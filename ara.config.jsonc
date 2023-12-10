@@ -1,2 +1,10 @@
 // ARA Configuration
-{}
+{
+    "clean": [],
+    "update": {
+        "exclude": [],
+        "force": false,
+        "install": false,
+        "write": false
+    }
+}
