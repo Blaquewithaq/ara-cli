@@ -1,29 +1,23 @@
-import {describe, expect, test} from "bun:test";
-import {getConfig} from "../../src/utils/config/index";
+import { describe, expect, test } from 'bun:test'
+import { getConfig } from '../../src/utils/config/index'
 
 describe(
-    "ara::utils",
-    () => {
+  'ara::utils',
+  () => {
+    describe(
+      'config',
+      () => {
+        test(
+          'getConfig()',
+          async () => {
+            const result = await getConfig()
 
-        describe(
-            "config",
-            () => {
+            console.log(result)
 
-                test(
-                    "getConfig()",
-                    async () => {
-
-                        const result = await getConfig();
-
-                        console.log(result);
-
-                        expect(typeof result).toBe("object");
-
-                    }
-                );
-
-            }
-        );
-
-    }
-);
+            expect(typeof result).toBe('object')
+          },
+        )
+      },
+    )
+  },
+)

@@ -10,8 +10,8 @@
     "builder": "bun compile && bun pkg",
     "archive": "bun run ./ci.ts archive",
     "all": "bun builder && bun archive",
-    "lint": "eslint \"src/**/*.ts\"",
-    "check": "eslint \"src/**/*.ts\" --fix"
+    "lint": "eslint --config eslint.config.js .",
+    "check": "eslint --config eslint.config.js . --fix"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^1.5.0",

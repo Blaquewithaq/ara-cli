@@ -1,26 +1,26 @@
 export {
-    getConfig
-} from "./config";
+  getConfig,
+} from './config'
 
-export {handleError} from "./error";
-
-export {
-    isDirectory,
-    isFile,
-    doesDirectoryExist,
-    doesFileExist,
-    extractTarball,
-    getFileList
-} from "./fs";
+export { handleError } from './error'
 
 export {
-    fetchDownload
-} from "./http";
+  isDirectory,
+  isFile,
+  doesDirectoryExist,
+  doesFileExist,
+  extractTarball,
+  getFileList,
+} from './fs'
 
 export {
-    isPackageInstalled,
-    listPackages,
-    listPackagesByRegex,
-    getPackageJSON,
-    getPackageInfo
-} from "./package";
+  fetchDownload,
+} from './http'
+
+export {
+  isPackageInstalled,
+  listPackages,
+  listPackagesByRegex,
+  getPackageJSON,
+  getPackageInfo,
+} from './package'

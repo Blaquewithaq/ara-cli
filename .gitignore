@@ -178,5 +178,6 @@ dist
 .ara
 .private
 pkg
+tests/playground
 ara-*.*
 bun.lockb

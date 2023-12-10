@@ -1,4 +1,4 @@
-import {handleError} from "..";
+import { handleError } from '..'
 
 /**
  * Asynchronously fetches and downloads a file from the specified URL to the specified path.
@@ -7,43 +7,38 @@ import {handleError} from "..";
  * @param path - The path where the downloaded file will be saved.
  * @returns A promise that resolves to an object containing information about the downloaded file (path, size, type) or a string in case of an error.
  */
-export async function fetchDownload (
-    url: string,
-    path: string
+export async function fetchDownload(
+  url: string,
+  path: string,
 ): Promise<
   | {
-      path: string;
-      size: number;
-      type: string;
+    path: string
+    size: number
+    type: string
   }
   | string
     > {
+  try {
+    const response = await fetch(url) as Response
 
-    try {
+    if (!response.ok) throw new Error(`Failed to download file from ${url}`)
 
-        const response = await fetch(url) as Response;
+    const blob = await response.blob()
 
-        if (!response.ok) throw new Error(`Failed to download file from ${url}`);
+    await Bun.write(
+      path,
+      blob,
+    )
 
-        const blob = await response.blob();
+    const file = Bun.file(path)
 
-        await Bun.write(
-            path,
-            blob
-        );
-
-        const file = Bun.file(path);
-
-        return {
-            "path": file.name ?? path,
-            "size": file.size,
-            "type": file.type
-        };
-
-    } catch (error: unknown) {
-
-        return handleError(error);
-
+    return {
+      path: file.name ?? path,
+      size: file.size,
+      type: file.type,
     }
-
+  }
+  catch (error: unknown) {
+    return handleError(error)
+  }
 }
