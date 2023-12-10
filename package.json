@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "clean": "bun run ./ci.ts clean",
-    "builder": "bun run ./ci.ts build",
+    "compile": "bun run ./ci.ts build",
     "pkg": "bun run ./ci.ts pkg",
+    "builder": "bun compile && bun pkg",
+    "archive": "bun run ./ci.ts archive",
+    "all": "bun builder && bun archive",
     "lint": "eslint \"src/**/*.ts\"",
     "check": "eslint \"src/**/*.ts\" --fix"
   },

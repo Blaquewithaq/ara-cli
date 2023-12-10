@@ -178,4 +178,5 @@ dist
 .ara
 .private
 pkg
+ara-*.*
 bun.lockb

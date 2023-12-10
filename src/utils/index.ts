@@ -5,8 +5,12 @@ export {
 export {handleError} from "./error";
 
 export {
+    isDirectory,
+    isFile,
     doesDirectoryExist,
-    doesFileExist
+    doesFileExist,
+    extractTarball,
+    getFileList
 } from "./fs";
 
 export {

@@ -1,6 +1,34 @@
-import {exists} from "node:fs/promises";
+import {exists, readdir, stat} from "node:fs/promises";
 import * as tar from "tar";
 import {handleError} from "..";
+
+/**
+ * Asynchronously checks if the specified path corresponds to a directory.
+ *
+ * @param path - The path to be checked.
+ * @returns A promise that resolves to a boolean indicating whether the path is a directory or not.
+ */
+export async function isDirectory (path: string): Promise<boolean> {
+
+    const stats = await stat(path);
+
+    return stats.isDirectory();
+
+}
+
+/**
+ * Asynchronously checks if the specified path corresponds to a file.
+ *
+ * @param path - The path to be checked.
+ * @returns A promise that resolves to a boolean indicating whether the path is a file or not.
+ */
+export async function isFile (path: string): Promise<boolean> {
+
+    const stats = await stat(path);
+
+    return stats.isFile();
+
+}
 
 /**
  * Asynchronously checks if a directory exists at the specified path.
@@ -47,5 +75,50 @@ export async function extractTarball (tarball: string, directory: string): Promi
         return handleError(error);
 
     }
+
+}
+
+/**
+ * Asynchronously retrieves a list of files in the specified directory and its subdirectories.
+ *
+ * @param directory - The directory path from which to retrieve the file list.
+ * @param files - An optional array of file paths to append to. Used for recursive calls.
+ * @returns A promise that resolves to an array of file paths in the specified directory and its subdirectories.
+ */
+export async function getFileList (directory: string, files: string[] = []): Promise<string[]> {
+
+    const fileList = await readdir(directory);
+
+    for await (const file of fileList) {
+
+        const fullPath = `${directory}/${file}`;
+
+        if (
+            await isDirectory(fullPath) === true &&
+            ![
+                ".git",
+                "node_modules"
+            ].includes(file)
+        ) {
+
+            await getFileList(
+                fullPath,
+                files
+            );
+
+        } else {
+
+            const path = fullPath.replace(
+                /^\.\/|.*pkg\//,
+                ""
+            );
+
+            files.push(path);
+
+        }
+
+    }
+
+    return files;
 
 }
