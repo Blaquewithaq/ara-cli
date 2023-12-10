@@ -2,8 +2,6 @@ name: Release
 
 on:
   push:
-    # branches:
-    #   - "*"
     tags:
       - "*.*.*"
 
@@ -45,12 +43,20 @@ jobs:
       - name: Verify artifacts
         run: ls -R artifacts
 
+      - name: Build Changelog
+        id: changelog
+        if: success()
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }}
+
       - name: Create release
         id: create-release
-        if: startsWith(github.ref, 'refs/tags/') && success()
+        if: success()
         uses: softprops/action-gh-release@v1
         with:
-          # body: ${{steps.github_release.outputs.changelog}}
+          body: ${{steps.changelog.outputs.changes}}
           draft: true
           prerelease: false
           fail_on_unmatched_files: false
