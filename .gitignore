@@ -177,3 +177,4 @@ dist
 # Custom
 .private
 bun.lockb
+pkg

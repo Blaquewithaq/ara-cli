@@ -4,8 +4,10 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "bun run scripts/build.ts",
+    "clean": "bun run ./ci.ts clean",
+    "builder": "bun run ./ci.ts build",
+    "pkg": "bun run ./ci.ts pkg",
+    "lint": "eslint \"src/**/*.ts\"",
     "check": "eslint \"src/**/*.ts\" --fix"
   },
   "devDependencies": {
