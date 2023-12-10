@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    # branches:
+    #   - "*"
+    tags:
+      - "*.*.*"
+
+jobs:
+  release-gh:
+    name: Release to GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wait for CI - ubuntu-latest
+        id: wait-for-ci-ubuntu
+        uses: tomchv/wait-my-workflow@v1.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: build-test-archive (ubuntu-latest)
+          ref: ${{ github.sha }}
+          intervalSeconds: 10
+          timeoutSeconds: 300
+
+      - name: Wait for CI - macos-latest
+        id: wait-for-ci-macos
+        uses: tomchv/wait-my-workflow@v1.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: build-test-archive (macos-latest)
+          ref: ${{ github.sha }}
+          intervalSeconds: 10
+          timeoutSeconds: 300
+
+      - name: Download artifacts
+        id: download-artifact-macos
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: ci.yml
+          workflow_conclusion: success
+          path: artifacts
+
+      - name: Verify artifacts
+        run: ls -R artifacts
+
+      - name: Create release
+        id: create-release
+        if: startsWith(github.ref, 'refs/tags/') && success()
+        uses: softprops/action-gh-release@v1
+        with:
+          # body: ${{steps.github_release.outputs.changelog}}
+          draft: true
+          prerelease: false
+          fail_on_unmatched_files: false
+          files: |
+            artifacts/*/*.tar.gz
+            artifacts/*/*.zip
