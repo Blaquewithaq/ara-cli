@@ -5,6 +5,6 @@
         "exclude": [],
         "force": false,
         "install": false,
-        "write": false
+        "write": true
     }
 }

@@ -17,12 +17,12 @@
     "@typescript-eslint/parser": "^6.13.2",
     "bun-types": "latest",
     "commander": "^11.1.0",
+    "comment-json": "^4.2.3",
     "eslint": "^8.55.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.0",
-    "jsonc-parser": "^3.2.0",
     "tar": "^6.2.0",
-    "toml": "^3.0.0"
+    "toml-patch": "^0.2.3"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

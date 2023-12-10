@@ -1,21 +1,19 @@
 import {ARAConfigPath} from "types";
 
 const root = process.cwd();
-const workspace = `${root}/.anomie`;
-const bin = `${workspace}/bin`;
+const workspace = `${root}/.ara`;
 const temp = `${workspace}/.temp`;
 
 export const paths = {
     root,
     workspace,
-    bin,
     temp
 };
 
 export const configPath: ARAConfigPath = {
     "locations": [
-        ".",
-        ".ara"
+        root,
+        workspace
     ],
     "names": ["ara.config"],
     "extensions": [
