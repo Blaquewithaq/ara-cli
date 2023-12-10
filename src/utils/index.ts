@@ -4,6 +4,19 @@ export {
 
 export {handleError} from "./error";
 
-// export {} from "./fs";
+export {
+    doesDirectoryExist,
+    doesFileExist
+} from "./fs";
 
-// export {} from "./package";
+export {
+    fetchDownload
+} from "./http";
+
+export {
+    isPackageInstalled,
+    listPackages,
+    listPackagesByRegex,
+    getPackageJSON,
+    getPackageInfo
+} from "./package";

@@ -9,7 +9,7 @@ import * as TOML from "toml";
  * @param configPath - The configuration path object containing locations, names, and extensions.
  * @returns An array of strings representing full paths generated from the combinations of locations, names, and extensions.
  */
-export function generateConfigPaths (configPath: ARAConfigPath): string[] {
+function generateConfigPaths (configPath: ARAConfigPath): string[] {
 
     const result: string[] = [];
 
