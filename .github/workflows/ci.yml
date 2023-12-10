@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*.*.*"
+
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build-test-archive:
+    name: Build, Test and Archive
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest] # windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "latest"
+
+      - name: Install Dependencies
+        run: |
+          bun install
+
+      - name: Run Builder
+        id: build
+        run: bun builder
+
+      - name: Run Tests
+        id: test
+        if: success()
+        run: bun test
+
+      - name: Create archive
+        id: archive
+        if: success()
+        run: bun archive
+
+      - name: Upload Artifact
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: ara-${{ matrix.os }}
+          path: |
+            pkg/**/*
+            *.tar.gz
+            *.zip
