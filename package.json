@@ -3,8 +3,20 @@
   "version": "0.0.1",
   "module": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bun run scripts/build.ts",
+    "check": "eslint \"src/**/*.ts\" --fix"
+  },
   "devDependencies": {
-    "bun-types": "latest"
+    "@stylistic/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "bun-types": "latest",
+    "commander": "^11.1.0",
+    "eslint": "^8.55.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
